@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createStaticClient } from "@/lib/supabase/static";
 
 export type Imagen = {
   id: string;
@@ -10,7 +10,7 @@ export type Imagen = {
 };
 
 export async function getImagenesPorSeccion(section: string): Promise<Imagen[]> {
-  const supabase = await createClient();
+  const supabase = createStaticClient();
   const { data } = await supabase
     .from("imagenes")
     .select("*")

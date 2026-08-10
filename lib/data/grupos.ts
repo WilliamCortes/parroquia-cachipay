@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createStaticClient } from "@/lib/supabase/static";
 
 export type Grupo = {
   id: string;
@@ -12,7 +12,7 @@ export type Grupo = {
 };
 
 export async function getGruposActivos(): Promise<Grupo[]> {
-  const supabase = await createClient();
+  const supabase = createStaticClient();
   const { data } = await supabase
     .from("grupos_parroquiales")
     .select("*")

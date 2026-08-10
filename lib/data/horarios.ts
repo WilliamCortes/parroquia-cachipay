@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createStaticClient } from "@/lib/supabase/static";
 
 export type HorarioMisa = {
   id: string;
@@ -30,7 +30,7 @@ export async function getHorarios(): Promise<{
   recurrentes: HorarioMisa[];
   especiales: HorarioMisa[];
 }> {
-  const supabase = await createClient();
+  const supabase = createStaticClient();
   const { data } = await supabase
     .from("horarios_misa")
     .select("*")
@@ -46,7 +46,7 @@ export async function getHorarios(): Promise<{
 
 /** Fechas especiales próximas (hoy en adelante), para mostrar en Inicio. */
 export async function getProximosEspeciales(limit = 3): Promise<HorarioMisa[]> {
-  const supabase = await createClient();
+  const supabase = createStaticClient();
   const today = new Date().toISOString().slice(0, 10);
   const { data } = await supabase
     .from("horarios_misa")

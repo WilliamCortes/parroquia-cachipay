@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createStaticClient } from "@/lib/supabase/static";
 
 export type Noticia = {
   id: string;
@@ -13,7 +13,7 @@ export type Noticia = {
 };
 
 export async function getNoticiasPublicadas(limit?: number): Promise<Noticia[]> {
-  const supabase = await createClient();
+  const supabase = createStaticClient();
   let query = supabase
     .from("eventos_noticias")
     .select("*")
@@ -27,7 +27,7 @@ export async function getNoticiasPublicadas(limit?: number): Promise<Noticia[]> 
 }
 
 export async function getNoticiaPorSlug(slug: string): Promise<Noticia | null> {
-  const supabase = await createClient();
+  const supabase = createStaticClient();
   const { data } = await supabase
     .from("eventos_noticias")
     .select("*")

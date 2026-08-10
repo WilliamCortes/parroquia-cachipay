@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createStaticClient } from "@/lib/supabase/static";
 
 export type MetodosPago = {
   wompi_enabled: boolean;
@@ -10,7 +10,7 @@ export type MetodosPago = {
 };
 
 export async function getMetodosPago(): Promise<MetodosPago> {
-  const supabase = await createClient();
+  const supabase = createStaticClient();
   const { data } = await supabase
     .from("metodos_pago")
     .select("*")

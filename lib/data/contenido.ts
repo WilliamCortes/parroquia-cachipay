@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createStaticClient } from "@/lib/supabase/static";
 
 export type ContenidoRow = {
   page: string;
@@ -9,7 +9,7 @@ export type ContenidoRow = {
 
 /** Devuelve el contenido editable de una página como un mapa `section.key -> value`. */
 export async function getContenido(page: string): Promise<Record<string, string>> {
-  const supabase = await createClient();
+  const supabase = createStaticClient();
   const { data } = await supabase
     .from("contenido")
     .select("section, key, value")
