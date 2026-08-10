@@ -1,11 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { CalendarDays, Clock, Heart, MapPin } from "lucide-react";
+import { CalendarDays, Clock, Heart, Landmark, MapPin } from "lucide-react";
 import { getContenido } from "@/lib/data/contenido";
-import { getProximosEspeciales } from "@/lib/data/horarios";
+import { getProximaMisaRecurrente, getProximosEspeciales, nombreDia } from "@/lib/data/horarios";
 import { getNoticiasPublicadas } from "@/lib/data/noticias";
 import { getImagenesPorSeccion } from "@/lib/data/imagenes";
-import { CarmelMark } from "@/components/site/carmel-mark";
 import { SectionEyebrow } from "@/components/site/section-eyebrow";
 import { OrnateFrame } from "@/components/site/ornate-frame";
 
@@ -17,10 +16,17 @@ function formatFecha(iso: string) {
   });
 }
 
+function formatDiasFaltantes(dias: number) {
+  if (dias === 0) return "Hoy";
+  if (dias === 1) return "Mañana";
+  return "Próxima";
+}
+
 export default async function InicioPage() {
-  const [inicio, proximos, noticias, heroImagenes] = await Promise.all([
+  const [inicio, proximos, proximaRecurrente, noticias, heroImagenes] = await Promise.all([
     getContenido("inicio"),
     getProximosEspeciales(3),
+    getProximaMisaRecurrente(),
     getNoticiasPublicadas(3),
     getImagenesPorSeccion("hero"),
   ]);
@@ -41,8 +47,6 @@ export default async function InicioPage() {
           <div className="absolute inset-0 bg-gradient-to-t from-espresso via-espresso/55 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-espresso/70 via-espresso/10 to-transparent" />
         </div>
-
-        <CarmelMark className="pointer-events-none absolute -right-16 -top-16 size-[26rem] text-oro/[0.07]" />
 
         <div className="relative mx-auto flex min-h-[82vh] max-w-6xl flex-col justify-end px-4 pb-20 pt-40 sm:px-6">
           <div className="mb-5 flex items-center gap-3">
@@ -87,7 +91,7 @@ export default async function InicioPage() {
         <div className="mt-12 grid gap-8 sm:grid-cols-3">
           {[
             { href: "/horarios", label: "Horarios de misa", icon: Clock },
-            { href: "/historia", label: "Nuestra historia", icon: CarmelMark },
+            { href: "/historia", label: "Nuestra historia", icon: Landmark },
             { href: "/grupos", label: "Grupos parroquiales", icon: MapPin },
           ].map((item) => (
             <Link key={item.href} href={item.href} className="group flex flex-col items-center text-center">
@@ -105,7 +109,6 @@ export default async function InicioPage() {
 
       {/* HORARIOS — sección oscura con marco ornamental */}
       <section className="relative overflow-hidden bg-espresso py-20 text-espresso-foreground">
-        <CarmelMark className="pointer-events-none absolute -left-10 bottom-0 size-72 text-oro/[0.06]" />
         <div className="relative mx-auto max-w-4xl px-4 sm:px-6">
           <div className="text-center">
             <SectionEyebrow tone="dark">Celébralo con nosotros</SectionEyebrow>
@@ -124,6 +127,21 @@ export default async function InicioPage() {
                     <p className="mt-1 text-sm text-espresso-foreground/60">{h.location}</p>
                   </div>
                 ))}
+              </div>
+            ) : proximaRecurrente ? (
+              <div className="text-center">
+                <p className="text-xs font-medium uppercase tracking-wide text-oro-pale">
+                  {formatDiasFaltantes(proximaRecurrente.diasFaltantes)} · {nombreDia(proximaRecurrente.day_of_week ?? 0)}
+                </p>
+                <p className="mt-2 font-serif text-3xl font-semibold">
+                  {proximaRecurrente.time.slice(0, 5)}
+                </p>
+                <p className="mt-1 text-sm text-espresso-foreground/60">{proximaRecurrente.location}</p>
+                {proximaRecurrente.notes?.toLowerCase().includes("verificar") && (
+                  <p className="mt-3 text-xs text-espresso-foreground/50">
+                    Horario preliminar, sujeto a confirmación por parte de la parroquia.
+                  </p>
+                )}
               </div>
             ) : (
               <p className="text-center text-sm text-espresso-foreground/70">
@@ -174,7 +192,6 @@ export default async function InicioPage() {
 
       {/* CTA DONACIONES */}
       <section className="relative overflow-hidden bg-carmelo py-24 text-pergamino">
-        <CarmelMark className="pointer-events-none absolute left-1/2 top-1/2 size-[32rem] -translate-x-1/2 -translate-y-1/2 text-pergamino/[0.06]" />
         <div className="relative mx-auto max-w-2xl px-4 text-center sm:px-6">
           <Heart className="mx-auto size-7 text-oro-pale" />
           <h2 className="mt-5 font-serif text-3xl font-semibold sm:text-4xl">

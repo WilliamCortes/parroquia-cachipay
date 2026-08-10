@@ -1,5 +1,3 @@
-import { CarmelMark } from "./carmel-mark";
-
 export function PageHero({
   eyebrow,
   title,
@@ -11,7 +9,6 @@ export function PageHero({
 }) {
   return (
     <div className="relative overflow-hidden bg-espresso py-20 text-espresso-foreground">
-      <CarmelMark className="pointer-events-none absolute -right-12 -top-12 size-64 text-oro/[0.08]" />
       <div className="relative mx-auto max-w-4xl px-4 sm:px-6">
         <div className="flex items-center gap-3">
           <span className="h-px w-8 bg-oro" />

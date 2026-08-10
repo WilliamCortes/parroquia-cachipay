@@ -60,3 +60,43 @@ export async function getProximosEspeciales(limit = 3): Promise<HorarioMisa[]> {
 
   return (data ?? []) as HorarioMisa[];
 }
+
+export type ProximaMisa = HorarioMisa & { diasFaltantes: number };
+
+/**
+ * Calcula la próxima misa del horario semanal recurrente a partir de la
+ * hora actual (America/Bogota), para mostrar en Inicio cuando no hay
+ * fechas especiales próximas.
+ */
+export async function getProximaMisaRecurrente(): Promise<ProximaMisa | null> {
+  const supabase = createStaticClient();
+  const { data } = await supabase
+    .from("horarios_misa")
+    .select("*")
+    .eq("active", true)
+    .eq("type", "recurring")
+    .order("sort_order", { ascending: true });
+
+  const rows = (data ?? []) as HorarioMisa[];
+  if (rows.length === 0) return null;
+
+  const ahora = new Date();
+  const hoyDia = ahora.getDay();
+  const minutosAhora = ahora.getHours() * 60 + ahora.getMinutes();
+
+  let mejor: ProximaMisa | null = null;
+  for (const h of rows) {
+    if (h.day_of_week === null) continue;
+    const [hh, mm] = h.time.split(":").map(Number);
+    const minutosMisa = hh * 60 + mm;
+
+    let diasFaltantes = (h.day_of_week - hoyDia + 7) % 7;
+    if (diasFaltantes === 0 && minutosMisa <= minutosAhora) diasFaltantes = 7;
+
+    if (!mejor || diasFaltantes < mejor.diasFaltantes) {
+      mejor = { ...h, diasFaltantes };
+    }
+  }
+
+  return mejor;
+}
