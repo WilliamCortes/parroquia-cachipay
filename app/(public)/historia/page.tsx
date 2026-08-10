@@ -16,7 +16,7 @@ export default async function HistoriaPage() {
     getContenido("historia"),
     getImagenesPorSeccion("hero"),
   ]);
-  const heroSrc = imagenes[0]?.public_url ?? "/images/hero.jpg";
+  const heroSrc = imagenes[0]?.public_url ?? "/images/hero-dia.webp";
 
   return (
     <>

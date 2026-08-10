@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { getContenido } from "@/lib/data/contenido";
 import { NAV_LINKS } from "./nav-links";
-import { CarmelMark } from "./carmel-mark";
+import { SiteLogo } from "./site-logo";
 
 function FacebookIcon() {
   return (
@@ -28,7 +28,7 @@ export async function Footer() {
       <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <CarmelMark className="size-8 text-oro" />
+            <SiteLogo className="size-12" />
             <p className="mt-3 font-serif text-lg font-semibold">
               Ntra. Señora del Carmen
             </p>

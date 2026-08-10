@@ -24,7 +24,7 @@ export default async function InicioPage() {
     getNoticiasPublicadas(3),
     getImagenesPorSeccion("hero"),
   ]);
-  const heroSrc = heroImagenes[0]?.public_url ?? "/images/hero.jpg";
+  const heroSrc = heroImagenes[0]?.public_url ?? "/images/hero-dia.webp";
 
   return (
     <>
@@ -36,10 +36,10 @@ export default async function InicioPage() {
             alt="Templo Parroquial Nuestra Señora del Carmen de Cachipay"
             fill
             priority
-            className="object-cover opacity-70"
+            className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-espresso via-espresso/70 to-espresso/30" />
-          <div className="absolute inset-0 bg-gradient-to-r from-espresso/60 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-espresso via-espresso/55 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-espresso/70 via-espresso/10 to-transparent" />
         </div>
 
         <CarmelMark className="pointer-events-none absolute -right-16 -top-16 size-[26rem] text-oro/[0.07]" />

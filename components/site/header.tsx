@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { NAV_LINKS } from "./nav-links";
 import { MobileNav } from "./mobile-nav";
-import { CarmelMark } from "./carmel-mark";
+import { SiteLogo } from "./site-logo";
 
 export function Header() {
   return (
     <header className="sticky top-0 z-40 bg-espresso text-espresso-foreground shadow-[0_1px_0_0_rgba(179,135,47,0.4)]">
       <div className="relative mx-auto flex h-18 max-w-6xl items-center justify-between gap-4 px-4 py-2.5 sm:px-6">
         <Link href="/" className="flex shrink-0 items-center gap-3">
-          <CarmelMark className="size-9 shrink-0 text-oro" />
+          <SiteLogo className="size-11" />
           <span className="hidden leading-tight sm:block">
             <span className="block whitespace-nowrap font-serif text-lg font-semibold tracking-wide text-espresso-foreground">
               Ntra. Sra. del Carmen
