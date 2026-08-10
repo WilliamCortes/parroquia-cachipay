@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Parroquia Nuestra Señora del Carmen de Cachipay
 
-## Getting Started
+Portal web y panel administrativo de la Parroquia Nuestra Señora del Carmen de Cachipay (Diócesis de Girardot).
 
-First, run the development server:
+## Stack
+
+- [Next.js](https://nextjs.org) 16 (App Router) + TypeScript
+- [Supabase](https://supabase.com) (Postgres, Auth, Storage)
+- Tailwind CSS v4 + shadcn/ui (Base UI)
+- Tiptap (editor de contenido enriquecido)
+- Wompi (Colombia) + PayPal (internacional) + Bre-B (QR estático) para donaciones
+
+## Desarrollo local
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Copia `.env.local.example` (o revisa las variables listadas abajo) y complétalas antes de correr el proyecto.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Estructura
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `app/(public)/` — sitio público (inicio, horarios, historia, galería, noticias, grupos, sacramentos, donaciones, contacto)
+- `app/admin/` — panel administrativo (protegido por Supabase Auth vía `proxy.ts`)
+- `app/api/` — rutas de pago (Wompi/PayPal) y webhooks
+- `lib/data/` — funciones de lectura de datos públicos desde Supabase
+- `lib/supabase/` — clientes de Supabase (browser, server, admin/service-role)
+- `supabase/migrations/` — esquema SQL (aplicar en orden)
+- `scripts/seed-images.mjs` — sube imágenes iniciales al bucket `parroquia-media`
 
-## Learn More
+## Variables de entorno
 
-To learn more about Next.js, take a look at the following resources:
+```
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=       # secreta, solo servidor
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+NEXT_PUBLIC_APP_URL=
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+NEXT_PUBLIC_WOMPI_PUBLIC_KEY=
+WOMPI_PRIVATE_KEY=
+WOMPI_INTEGRITY_SECRET=
+WOMPI_EVENTS_KEY=
 
-## Deploy on Vercel
+NEXT_PUBLIC_PAYPAL_CLIENT_ID=
+PAYPAL_CLIENT_ID=
+PAYPAL_CLIENT_SECRET=
+PAYPAL_WEBHOOK_ID=
+PAYPAL_API_BASE=https://api-m.sandbox.paypal.com
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Usuarios admin
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+No hay registro público. Los usuarios del panel (`/admin`) se crean manualmente desde el dashboard de Supabase (Authentication → Users) o vía la API de administración.
+
+## Deploy
+
+Proyecto pensado para desplegar en [Vercel](https://vercel.com), con las variables de entorno configuradas por ambiente (sandbox primero para Wompi/PayPal, llaves reales solo en producción una vez confirmadas).
