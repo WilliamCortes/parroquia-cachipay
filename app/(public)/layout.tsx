@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Cormorant } from "next/font/google";
 import "../globals.css";
 import { Header } from "@/components/site/header";
 import { Footer } from "@/components/site/footer";
@@ -11,8 +11,9 @@ const inter = Inter({
   variable: "--font-sans",
 });
 
-const playfair = Playfair_Display({
+const cormorant = Cormorant({
   subsets: ["latin"],
+  weight: ["500", "600", "700"],
   variable: "--font-serif",
 });
 
@@ -65,7 +66,7 @@ export default async function PublicLayout({ children }: { children: React.React
   };
 
   return (
-    <html lang="es" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="es" className={`${inter.variable} ${cormorant.variable}`}>
       <body className="min-h-screen flex flex-col antialiased">
         <script
           type="application/ld+json"

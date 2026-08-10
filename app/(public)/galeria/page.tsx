@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { getImagenesPorSeccion } from "@/lib/data/imagenes";
+import { PageHero } from "@/components/site/page-hero";
 
 export const metadata: Metadata = {
   title: "Galería",
@@ -29,25 +30,28 @@ export default async function GaleriaPage() {
       : FALLBACK_IMAGES;
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-      <h1 className="font-serif text-3xl font-semibold sm:text-4xl">Galería</h1>
-      <p className="mt-3 text-muted-foreground">
-        Momentos de la vida parroquial, celebraciones y comunidad de Cachipay y sus veredas.
-      </p>
+    <>
+      <PageHero
+        eyebrow="Nuestra comunidad"
+        title="Galería"
+        description="Momentos de la vida parroquial, celebraciones y comunidad de Cachipay y sus veredas."
+      />
 
-      <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 md:gap-4">
-        {items.map((img, i) => (
-          <div key={i} className="relative aspect-square overflow-hidden rounded-lg bg-secondary">
-            <Image
-              src={img.src}
-              alt={img.alt}
-              fill
-              sizes="(max-width: 640px) 50vw, 33vw"
-              className="object-cover transition-transform hover:scale-105"
-            />
-          </div>
-        ))}
+      <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:gap-4">
+          {items.map((img, i) => (
+            <div key={i} className="relative aspect-square overflow-hidden rounded-sm bg-secondary ring-1 ring-border">
+              <Image
+                src={img.src}
+                alt={img.alt}
+                fill
+                sizes="(max-width: 640px) 50vw, 33vw"
+                className="object-cover transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

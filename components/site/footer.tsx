@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { getContenido } from "@/lib/data/contenido";
 import { NAV_LINKS } from "./nav-links";
+import { CarmelMark } from "./carmel-mark";
 
 function FacebookIcon() {
   return (
@@ -23,24 +24,25 @@ export async function Footer() {
   const contacto = await getContenido("contacto");
 
   return (
-    <footer className="mt-24 border-t bg-secondary/40">
-      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+    <footer className="mt-24 border-t border-oro/25 bg-espresso text-espresso-foreground">
+      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <p className="font-serif text-lg font-semibold">
-              Parroquia Nuestra Señora del Carmen
+            <CarmelMark className="size-8 text-oro" />
+            <p className="mt-3 font-serif text-lg font-semibold">
+              Ntra. Señora del Carmen
             </p>
-            <p className="mt-2 text-sm text-muted-foreground">
+            <p className="mt-1 text-sm text-espresso-foreground/60">
               {contacto["info.diocesis"] ?? "Diócesis de Girardot"} · Cachipay, Cundinamarca
             </p>
           </div>
 
           <div>
-            <p className="text-sm font-semibold">Navegación</p>
-            <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+            <p className="text-xs font-semibold uppercase tracking-[0.15em] text-oro-pale">Navegación</p>
+            <ul className="mt-4 space-y-2.5 text-sm text-espresso-foreground/70">
               {NAV_LINKS.slice(1).map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="hover:text-foreground">
+                  <Link href={link.href} className="hover:text-oro-pale">
                     {link.label}
                   </Link>
                 </li>
@@ -49,27 +51,27 @@ export async function Footer() {
           </div>
 
           <div>
-            <p className="text-sm font-semibold">Contacto</p>
-            <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+            <p className="text-xs font-semibold uppercase tracking-[0.15em] text-oro-pale">Contacto</p>
+            <ul className="mt-4 space-y-2.5 text-sm text-espresso-foreground/70">
               {contacto["info.telefono"] && (
                 <li className="flex items-center gap-2">
-                  <Phone className="size-4 shrink-0" />
-                  <a href={`tel:${contacto["info.telefono"].replace(/\s+/g, "")}`} className="hover:text-foreground">
+                  <Phone className="size-4 shrink-0 text-oro" />
+                  <a href={`tel:${contacto["info.telefono"].replace(/\s+/g, "")}`} className="hover:text-oro-pale">
                     {contacto["info.telefono"]}
                   </a>
                 </li>
               )}
               {contacto["info.correo"] && (
                 <li className="flex items-center gap-2">
-                  <Mail className="size-4 shrink-0" />
-                  <a href={`mailto:${contacto["info.correo"]}`} className="hover:text-foreground break-all">
+                  <Mail className="size-4 shrink-0 text-oro" />
+                  <a href={`mailto:${contacto["info.correo"]}`} className="hover:text-oro-pale break-all">
                     {contacto["info.correo"]}
                   </a>
                 </li>
               )}
               {contacto["info.ubicacion"] && (
                 <li className="flex items-center gap-2">
-                  <MapPin className="size-4 shrink-0" />
+                  <MapPin className="size-4 shrink-0 text-oro" />
                   <span>{contacto["info.ubicacion"]}</span>
                 </li>
               )}
@@ -77,14 +79,14 @@ export async function Footer() {
           </div>
 
           <div>
-            <p className="text-sm font-semibold">Síguenos</p>
-            <div className="mt-3 flex gap-3">
+            <p className="text-xs font-semibold uppercase tracking-[0.15em] text-oro-pale">Síguenos</p>
+            <div className="mt-4 flex gap-3">
               <a
                 href="https://www.facebook.com/p/Parroquia-Nuestra-Se%C3%B1ora-del-Carmen-de-Cachipay-100089425882395/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                className="flex size-9 items-center justify-center rounded-full border hover:bg-secondary"
+                className="flex size-9 items-center justify-center rounded-full border border-oro/30 text-oro-pale hover:bg-white/5"
               >
                 <FacebookIcon />
               </a>
@@ -93,7 +95,7 @@ export async function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="flex size-9 items-center justify-center rounded-full border hover:bg-secondary"
+                className="flex size-9 items-center justify-center rounded-full border border-oro/30 text-oro-pale hover:bg-white/5"
               >
                 <InstagramIcon />
               </a>
@@ -101,7 +103,7 @@ export async function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 border-t pt-6 text-xs text-muted-foreground">
+        <div className="mt-12 border-t border-oro/15 pt-6 text-xs text-espresso-foreground/50">
           © {new Date().getFullYear()} Parroquia Nuestra Señora del Carmen de Cachipay.
         </div>
       </div>

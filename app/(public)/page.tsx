@@ -1,10 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import { CalendarDays, Church, Heart } from "lucide-react";
+import { CalendarDays, Clock, Heart, MapPin } from "lucide-react";
 import { getContenido } from "@/lib/data/contenido";
-import { getProximosEspeciales, nombreDia } from "@/lib/data/horarios";
+import { getProximosEspeciales } from "@/lib/data/horarios";
 import { getNoticiasPublicadas } from "@/lib/data/noticias";
 import { getImagenesPorSeccion } from "@/lib/data/imagenes";
+import { CarmelMark } from "@/components/site/carmel-mark";
+import { SectionEyebrow } from "@/components/site/section-eyebrow";
+import { OrnateFrame } from "@/components/site/ornate-frame";
 
 function formatFecha(iso: string) {
   return new Date(`${iso}T00:00:00`).toLocaleDateString("es-CO", {
@@ -25,35 +28,47 @@ export default async function InicioPage() {
 
   return (
     <>
-      <section className="relative overflow-hidden">
+      {/* HERO */}
+      <section className="relative overflow-hidden bg-espresso">
         <div className="absolute inset-0">
           <Image
             src={heroSrc}
-            alt="Parroquia Nuestra Señora del Carmen de Cachipay"
+            alt="Templo Parroquial Nuestra Señora del Carmen de Cachipay"
             fill
             priority
-            className="object-cover"
+            className="object-cover opacity-70"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-espresso via-espresso/70 to-espresso/30" />
+          <div className="absolute inset-0 bg-gradient-to-r from-espresso/60 via-transparent to-transparent" />
         </div>
-        <div className="relative mx-auto flex min-h-[70vh] max-w-6xl flex-col justify-end px-4 pb-16 pt-32 sm:px-6">
-          <p className="font-serif text-sm uppercase tracking-widest text-gold">
-            {inicio["hero.subtitulo"] ?? "Diócesis de Girardot"}
-          </p>
-          <h1 className="mt-3 max-w-2xl font-serif text-4xl font-semibold text-white sm:text-5xl">
+
+        <CarmelMark className="pointer-events-none absolute -right-16 -top-16 size-[26rem] text-oro/[0.07]" />
+
+        <div className="relative mx-auto flex min-h-[82vh] max-w-6xl flex-col justify-end px-4 pb-20 pt-40 sm:px-6">
+          <div className="mb-5 flex items-center gap-3">
+            <span className="h-px w-10 bg-oro" />
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-oro-pale">
+              {inicio["hero.subtitulo"] ?? "Diócesis de Girardot · Cachipay, Cundinamarca"}
+            </p>
+          </div>
+          <h1 className="max-w-3xl font-serif text-5xl font-semibold leading-[1.05] text-pergamino sm:text-6xl lg:text-7xl">
             {inicio["hero.titulo"] ?? "Parroquia Nuestra Señora del Carmen de Cachipay"}
           </h1>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <p className="mt-6 max-w-lg text-pergamino/70">
+            Setenta años acompañando a Cachipay y sus veredas en la fe, los sacramentos y la
+            devoción a la Virgen del Carmen.
+          </p>
+          <div className="mt-10 flex flex-wrap gap-4">
             <Link
               href="/horarios"
-              className="inline-flex items-center gap-2 rounded-md bg-white px-5 py-3 text-sm font-semibold text-foreground hover:bg-white/90"
+              className="inline-flex items-center gap-2 rounded-full bg-pergamino px-6 py-3.5 text-sm font-semibold text-espresso transition-colors hover:bg-white"
             >
               <CalendarDays className="size-4" />
               Ver horarios de misa
             </Link>
             <Link
               href="/donaciones"
-              className="inline-flex items-center gap-2 rounded-md bg-gold px-5 py-3 text-sm font-semibold text-gold-foreground hover:opacity-90"
+              className="inline-flex items-center gap-2 rounded-full border border-oro/60 px-6 py-3.5 text-sm font-semibold text-oro-pale transition-colors hover:bg-oro/10"
             >
               <Heart className="size-4" />
               Donaciones y diezmos
@@ -62,69 +77,113 @@ export default async function InicioPage() {
         </div>
       </section>
 
-      {proximos.length > 0 && (
-        <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-          <div className="mb-8 flex items-center gap-2">
-            <Church className="size-5 text-primary" />
-            <h2 className="font-serif text-2xl font-semibold">Próximas celebraciones</h2>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-3">
-            {proximos.map((h) => (
-              <div key={h.id} className="rounded-lg border bg-card p-5">
-                <p className="text-sm font-medium capitalize text-primary">
-                  {h.specific_date && formatFecha(h.specific_date)}
-                </p>
-                <p className="mt-1 text-lg font-semibold">{h.time.slice(0, 5)}</p>
-                <p className="mt-1 text-sm text-muted-foreground">{h.location}</p>
-                {h.notes && <p className="mt-2 text-xs text-muted-foreground">{h.notes}</p>}
+      {/* EXPLORAR */}
+      <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+        <SectionEyebrow>Vida parroquial</SectionEyebrow>
+        <h2 className="font-serif text-3xl font-semibold text-foreground sm:text-4xl">
+          Una comunidad de fe en las montañas de Cundinamarca
+        </h2>
+
+        <div className="mt-12 grid gap-8 sm:grid-cols-3">
+          {[
+            { href: "/horarios", label: "Horarios de misa", icon: Clock },
+            { href: "/historia", label: "Nuestra historia", icon: CarmelMark },
+            { href: "/grupos", label: "Grupos parroquiales", icon: MapPin },
+          ].map((item) => (
+            <Link key={item.href} href={item.href} className="group flex flex-col items-center text-center">
+              <div className="flex size-32 items-center justify-center rounded-full border border-oro/40 bg-secondary transition-colors group-hover:border-oro group-hover:bg-oro/10">
+                <item.icon className="size-10 text-carmelo" />
               </div>
+              <p className="mt-5 font-serif text-lg font-semibold text-foreground group-hover:text-carmelo">
+                {item.label}
+              </p>
+              <span className="mt-1 h-px w-6 bg-oro transition-all group-hover:w-10" />
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* HORARIOS — sección oscura con marco ornamental */}
+      <section className="relative overflow-hidden bg-espresso py-20 text-espresso-foreground">
+        <CarmelMark className="pointer-events-none absolute -left-10 bottom-0 size-72 text-oro/[0.06]" />
+        <div className="relative mx-auto max-w-4xl px-4 sm:px-6">
+          <div className="text-center">
+            <SectionEyebrow tone="dark">Celébralo con nosotros</SectionEyebrow>
+            <h2 className="font-serif text-3xl font-semibold sm:text-4xl">Horarios de misa</h2>
+          </div>
+
+          <OrnateFrame className="mx-auto mt-10 max-w-2xl">
+            {proximos.length > 0 ? (
+              <div className="grid gap-6 sm:grid-cols-3">
+                {proximos.map((h) => (
+                  <div key={h.id} className="text-center">
+                    <p className="text-xs font-medium uppercase tracking-wide text-oro-pale">
+                      {h.specific_date && formatFecha(h.specific_date)}
+                    </p>
+                    <p className="mt-2 font-serif text-2xl font-semibold">{h.time.slice(0, 5)}</p>
+                    <p className="mt-1 text-sm text-espresso-foreground/60">{h.location}</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-center text-sm text-espresso-foreground/70">
+                Consulta el horario semanal completo y las próximas celebraciones especiales.
+              </p>
+            )}
+            <div className="mt-8 text-center">
+              <Link
+                href="/horarios"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-oro-pale hover:underline"
+              >
+                Ver todos los horarios →
+              </Link>
+            </div>
+          </OrnateFrame>
+        </div>
+      </section>
+
+      {/* NOTICIAS */}
+      {noticias.length > 0 && (
+        <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+          <SectionEyebrow>Al día</SectionEyebrow>
+          <h2 className="font-serif text-3xl font-semibold text-foreground sm:text-4xl">
+            Noticias y avisos
+          </h2>
+
+          <div className="mt-10 grid gap-6 sm:grid-cols-3">
+            {noticias.map((n) => (
+              <Link
+                key={n.id}
+                href={`/noticias/${n.slug}`}
+                className="group rounded-sm border border-border bg-card p-6 transition-colors hover:border-oro/50"
+              >
+                <p className="text-xs font-semibold uppercase tracking-wide text-carmelo">
+                  {n.category}
+                </p>
+                <h3 className="mt-3 font-serif text-xl font-semibold text-foreground group-hover:text-carmelo">
+                  {n.title}
+                </h3>
+                {n.excerpt && (
+                  <p className="mt-2 line-clamp-3 text-sm text-muted-foreground">{n.excerpt}</p>
+                )}
+              </Link>
             ))}
           </div>
-          <div className="mt-6">
-            <Link href="/horarios" className="text-sm font-medium text-primary hover:underline">
-              Ver todos los horarios →
-            </Link>
-          </div>
         </section>
       )}
 
-      {noticias.length > 0 && (
-        <section className="bg-secondary/40 py-16">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6">
-            <h2 className="mb-8 font-serif text-2xl font-semibold">Últimas noticias</h2>
-            <div className="grid gap-6 sm:grid-cols-3">
-              {noticias.map((n) => (
-                <Link
-                  key={n.id}
-                  href={`/noticias/${n.slug}`}
-                  className="group rounded-lg border bg-card p-5 transition-shadow hover:shadow-md"
-                >
-                  <p className="text-xs font-medium uppercase tracking-wide text-primary">
-                    {n.category}
-                  </p>
-                  <h3 className="mt-2 font-serif text-lg font-semibold group-hover:underline">
-                    {n.title}
-                  </h3>
-                  {n.excerpt && (
-                    <p className="mt-2 line-clamp-3 text-sm text-muted-foreground">{n.excerpt}</p>
-                  )}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-        <div className="rounded-xl border bg-card p-8 text-center sm:p-12">
-          <Heart className="mx-auto size-8 text-gold" />
-          <h2 className="mt-4 font-serif text-2xl font-semibold">
+      {/* CTA DONACIONES */}
+      <section className="relative overflow-hidden bg-carmelo py-24 text-pergamino">
+        <CarmelMark className="pointer-events-none absolute left-1/2 top-1/2 size-[32rem] -translate-x-1/2 -translate-y-1/2 text-pergamino/[0.06]" />
+        <div className="relative mx-auto max-w-2xl px-4 text-center sm:px-6">
+          <Heart className="mx-auto size-7 text-oro-pale" />
+          <h2 className="mt-5 font-serif text-3xl font-semibold sm:text-4xl">
             {inicio["cta.donaciones_texto"] ??
               "Con tu diezmo y ofrenda ayudas a sostener la vida y las obras de nuestra parroquia."}
           </h2>
           <Link
             href="/donaciones"
-            className="mt-6 inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:opacity-90"
+            className="mt-8 inline-flex items-center gap-2 rounded-full bg-oro px-7 py-3.5 text-sm font-semibold text-espresso transition-opacity hover:opacity-90"
           >
             Conocer formas de donar
           </Link>

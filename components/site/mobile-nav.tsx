@@ -14,6 +14,7 @@ export function MobileNav() {
       <Button
         variant="ghost"
         size="icon"
+        className="text-espresso-foreground hover:bg-white/10 hover:text-oro-pale"
         aria-label={open ? "Cerrar menú" : "Abrir menú"}
         onClick={() => setOpen((v) => !v)}
       >
@@ -21,14 +22,14 @@ export function MobileNav() {
       </Button>
 
       {open && (
-        <nav className="absolute inset-x-0 top-full border-b bg-background shadow-lg">
+        <nav className="absolute inset-x-0 top-full border-t border-oro/20 bg-espresso shadow-lg">
           <ul className="flex flex-col p-4 gap-1">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="block rounded-md px-3 py-2 text-sm font-medium hover:bg-secondary"
+                  className="block rounded-md px-3 py-2 text-sm font-medium text-espresso-foreground/85 hover:bg-white/5 hover:text-oro-pale"
                 >
                   {link.label}
                 </Link>
@@ -38,7 +39,7 @@ export function MobileNav() {
               <Link
                 href="/donaciones"
                 onClick={() => setOpen(false)}
-                className="block rounded-md bg-gold px-3 py-2 text-center text-sm font-semibold text-gold-foreground"
+                className="block rounded-full bg-oro px-3 py-2 text-center text-sm font-semibold text-espresso"
               >
                 Donaciones
               </Link>

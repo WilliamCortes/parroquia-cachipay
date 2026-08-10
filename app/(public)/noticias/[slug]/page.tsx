@@ -43,21 +43,21 @@ export default async function NoticiaPage({
   if (!noticia) notFound();
 
   return (
-    <article className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
-      <span className="rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium uppercase tracking-wide text-secondary-foreground">
+    <article className="mx-auto max-w-3xl px-4 py-20 sm:px-6">
+      <span className="text-xs font-semibold uppercase tracking-wide text-carmelo">
         {noticia.category}
       </span>
-      <h1 className="mt-4 font-serif text-3xl font-semibold sm:text-4xl">{noticia.title}</h1>
-      <p className="mt-2 text-sm text-muted-foreground">{formatFecha(noticia.published_at)}</p>
+      <h1 className="mt-3 font-serif text-4xl font-semibold text-foreground sm:text-5xl">{noticia.title}</h1>
+      <p className="mt-3 text-sm text-muted-foreground">{formatFecha(noticia.published_at)}</p>
 
       {noticia.cover_image_url && (
-        <div className="relative mt-8 aspect-video w-full overflow-hidden rounded-xl">
+        <div className="relative mt-10 aspect-video w-full overflow-hidden rounded-sm">
           <Image src={noticia.cover_image_url} alt={noticia.title} fill className="object-cover" />
         </div>
       )}
 
       <div
-        className="prose prose-neutral mt-8 max-w-none"
+        className="prose prose-neutral mt-10 max-w-none prose-headings:font-serif prose-a:text-carmelo"
         dangerouslySetInnerHTML={{ __html: noticia.body }}
       />
     </article>

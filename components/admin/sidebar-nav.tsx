@@ -14,6 +14,7 @@ import {
   LogOut,
 } from "lucide-react";
 import { logout } from "@/app/admin/actions/auth";
+import { CarmelMark } from "@/components/site/carmel-mark";
 
 const NAV_ITEMS = [
   { href: "/admin", icon: LayoutDashboard, label: "Panel", exact: true },
@@ -33,8 +34,8 @@ export function SidebarNav() {
     <aside className="fixed left-0 top-0 z-30 flex h-full w-60 flex-col border-r bg-card">
       <div className="border-b px-5 py-5">
         <div className="flex items-center gap-2.5">
-          <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-sm font-bold text-primary-foreground">
-            NSC
+          <span className="flex size-8 items-center justify-center rounded-lg bg-primary">
+            <CarmelMark className="size-5 text-primary-foreground" />
           </span>
           <div>
             <p className="text-sm font-semibold">Ntra. Sra. del Carmen</p>

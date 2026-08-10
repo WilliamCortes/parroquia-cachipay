@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getNoticiasPublicadas } from "@/lib/data/noticias";
+import { PageHero } from "@/components/site/page-hero";
 
 export const metadata: Metadata = {
   title: "Noticias",
@@ -18,30 +19,30 @@ export default async function NoticiasPage() {
   const noticias = await getNoticiasPublicadas();
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6">
-      <h1 className="font-serif text-3xl font-semibold sm:text-4xl">Noticias y avisos</h1>
+    <>
+      <PageHero eyebrow="Al día" title="Noticias y avisos" />
 
-      <div className="mt-10 space-y-6">
-        {noticias.length === 0 && (
-          <p className="text-muted-foreground">Aún no hay noticias publicadas.</p>
-        )}
-        {noticias.map((n) => (
-          <Link
-            key={n.id}
-            href={`/noticias/${n.slug}`}
-            className="block rounded-lg border bg-card p-6 transition-shadow hover:shadow-md"
-          >
-            <div className="flex items-center gap-3 text-xs text-muted-foreground">
-              <span className="rounded-full bg-secondary px-2.5 py-0.5 font-medium uppercase tracking-wide text-secondary-foreground">
-                {n.category}
-              </span>
-              <span>{formatFecha(n.published_at)}</span>
-            </div>
-            <h2 className="mt-3 font-serif text-xl font-semibold">{n.title}</h2>
-            {n.excerpt && <p className="mt-2 text-sm text-muted-foreground">{n.excerpt}</p>}
-          </Link>
-        ))}
+      <div className="mx-auto max-w-3xl px-4 py-20 sm:px-6">
+        <div className="divide-y divide-border">
+          {noticias.length === 0 && (
+            <p className="text-muted-foreground">Aún no hay noticias publicadas.</p>
+          )}
+          {noticias.map((n) => (
+            <Link key={n.id} href={`/noticias/${n.slug}`} className="group block py-7 first:pt-0">
+              <div className="flex items-center gap-3 text-xs">
+                <span className="font-semibold uppercase tracking-wide text-carmelo">
+                  {n.category}
+                </span>
+                <span className="text-muted-foreground">{formatFecha(n.published_at)}</span>
+              </div>
+              <h2 className="mt-3 font-serif text-2xl font-semibold text-foreground group-hover:text-carmelo">
+                {n.title}
+              </h2>
+              {n.excerpt && <p className="mt-2 text-sm text-muted-foreground">{n.excerpt}</p>}
+            </Link>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

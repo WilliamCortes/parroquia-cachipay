@@ -41,6 +41,15 @@
   --color-card: var(--card);
   --color-gold: var(--gold);
   --color-gold-foreground: var(--gold-foreground);
+  --color-espresso: var(--espresso);
+  --color-espresso-foreground: var(--espresso-foreground);
+  --color-carmelo: var(--carmelo);
+  --color-carmelo-foreground: var(--carmelo-foreground);
+  --color-pergamino: var(--pergamino);
+  --color-pergamino-foreground: var(--pergamino-foreground);
+  --color-oro: var(--oro);
+  --color-oro-pale: var(--oro-pale);
+  --color-vino: var(--vino);
   --font-serif: var(--font-serif);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
@@ -52,26 +61,38 @@
 }
 
 :root {
-  --background: oklch(0.99 0.005 80);
-  --foreground: oklch(0.2 0.02 40);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.2 0.02 40);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.2 0.02 40);
-  --primary: oklch(0.4 0.11 40);
-  --primary-foreground: oklch(0.98 0.005 80);
-  --secondary: oklch(0.96 0.015 75);
-  --secondary-foreground: oklch(0.3 0.05 40);
-  --muted: oklch(0.96 0.015 75);
-  --muted-foreground: oklch(0.5 0.02 40);
-  --accent: oklch(0.78 0.12 80);
-  --accent-foreground: oklch(0.25 0.05 40);
+  /* Identidad Nuestra Señora del Carmen: marrón carmelita (hábito/escapulario),
+     pergamino cálido, oro bruñido (coronas) y vino como acento terciario. */
+  --espresso: #24160f;
+  --espresso-foreground: #f2e6d5;
+  --carmelo: #6b3a22;
+  --carmelo-foreground: #f7efe1;
+  --pergamino: #f7f0e2;
+  --pergamino-foreground: #2a1a10;
+  --oro: #b3872f;
+  --oro-pale: #e3c581;
+  --vino: #7a2e2e;
+
+  --background: #fbf7ef;
+  --foreground: #2a1a10;
+  --card: #ffffff;
+  --card-foreground: #2a1a10;
+  --popover: #ffffff;
+  --popover-foreground: #2a1a10;
+  --primary: #6b3a22;
+  --primary-foreground: #f7efe1;
+  --secondary: #efe4d1;
+  --secondary-foreground: #3d2414;
+  --muted: #efe4d1;
+  --muted-foreground: #6b5d4d;
+  --accent: #b3872f;
+  --accent-foreground: #2a1a10;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.9 0.02 70);
-  --input: oklch(0.9 0.02 70);
-  --ring: oklch(0.6 0.1 45);
-  --gold: oklch(0.78 0.12 80);
-  --gold-foreground: oklch(0.25 0.05 40);
+  --border: #e2d3ba;
+  --input: #e2d3ba;
+  --ring: #b3872f;
+  --gold: #b3872f;
+  --gold-foreground: #2a1a10;
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -89,26 +110,26 @@
 }
 
 .dark {
-  --background: oklch(0.18 0.015 40);
-  --foreground: oklch(0.96 0.01 75);
-  --card: oklch(0.23 0.02 40);
-  --card-foreground: oklch(0.96 0.01 75);
-  --popover: oklch(0.23 0.02 40);
-  --popover-foreground: oklch(0.96 0.01 75);
-  --primary: oklch(0.75 0.1 70);
-  --primary-foreground: oklch(0.18 0.02 40);
-  --secondary: oklch(0.28 0.02 40);
-  --secondary-foreground: oklch(0.96 0.01 75);
-  --muted: oklch(0.28 0.02 40);
-  --muted-foreground: oklch(0.7 0.02 60);
-  --accent: oklch(0.7 0.11 80);
-  --accent-foreground: oklch(0.18 0.02 40);
+  --background: #24160f;
+  --foreground: #f2e6d5;
+  --card: #2e1c12;
+  --card-foreground: #f2e6d5;
+  --popover: #2e1c12;
+  --popover-foreground: #f2e6d5;
+  --primary: #e3c581;
+  --primary-foreground: #24160f;
+  --secondary: #3a271a;
+  --secondary-foreground: #f2e6d5;
+  --muted: #3a271a;
+  --muted-foreground: #c9b299;
+  --accent: #e3c581;
+  --accent-foreground: #24160f;
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 12%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.7 0.1 70);
-  --gold: oklch(0.7 0.11 80);
-  --gold-foreground: oklch(0.18 0.02 40);
+  --border: rgb(255 255 255 / 12%);
+  --input: rgb(255 255 255 / 15%);
+  --ring: #e3c581;
+  --gold: #e3c581;
+  --gold-foreground: #24160f;
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);

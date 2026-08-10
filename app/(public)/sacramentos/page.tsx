@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getContenido } from "@/lib/data/contenido";
+import { PageHero } from "@/components/site/page-hero";
 
 export const metadata: Metadata = {
   title: "Sacramentos",
@@ -21,25 +22,28 @@ export default async function SacramentosPage() {
   const contenido = await getContenido("sacramentos");
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
-      <h1 className="font-serif text-3xl font-semibold sm:text-4xl">Sacramentos</h1>
-      {contenido["intro.texto"] && (
-        <p className="mt-4 text-muted-foreground">{contenido["intro.texto"]}</p>
-      )}
+    <>
+      <PageHero
+        eyebrow="Vida sacramental"
+        title="Sacramentos"
+        description={contenido["intro.texto"]}
+      />
 
-      <div className="mt-10 divide-y rounded-lg border bg-card">
-        {SACRAMENTOS.map((s) => {
-          const texto = contenido[`${s.key}.texto`];
-          return (
-            <div key={s.key} className="p-6">
-              <h2 className="font-serif text-lg font-semibold">{s.label}</h2>
-              <p className="mt-2 text-sm text-muted-foreground">
-                {texto ?? "Información próximamente. Comunícate con la parroquia para conocer los requisitos."}
-              </p>
-            </div>
-          );
-        })}
+      <div className="mx-auto max-w-3xl px-4 py-20 sm:px-6">
+        <div className="divide-y divide-border">
+          {SACRAMENTOS.map((s) => {
+            const texto = contenido[`${s.key}.texto`];
+            return (
+              <div key={s.key} className="py-7 first:pt-0">
+                <h2 className="font-serif text-xl font-semibold text-carmelo">{s.label}</h2>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  {texto ?? "Información próximamente. Comunícate con la parroquia para conocer los requisitos."}
+                </p>
+              </div>
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
